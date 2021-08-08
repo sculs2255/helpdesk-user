@@ -25,5 +25,10 @@ export default {
     SendSB,
     ResetPassSB,
   },
+  mounted() {
+    if (!this.$auth.loggedIn) {
+      this.$router.push("/login");
+    }
+  },
 }
 </script>

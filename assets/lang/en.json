@@ -1,0 +1,32 @@
+{
+  "header": {
+    "app": "IT Help Desk System(EN)",
+    "menu": {
+    },
+    "profile":{
+      "profile": "My profile",
+      "firstname": "First Name",
+      "lastname": "Last Name",
+      "phone" : "Telephone No.",
+      "email" : "Email Address",
+      "roles" : "Roles",
+      "status" : "Status",
+      "save" : "Save profile",
+      "change_password" : "Change  password",
+      "current_password" : "Current password",
+      "new_password" : "New password",
+      "save_password" : "Save new password",
+      "confirm_password" : "Confirm new password",
+      "logout" : "Sign out"
+    },
+    "topic": {
+      "service": "OUR SERVICE",
+      "support": "COUNTRIES THAT SUPPORT PROJECTS",
+      "brand": "ALL PRODUCT"
+    },
+    "lang": "language"
+  },
+  "footer": {
+    "app": "footer"
+  }
+}

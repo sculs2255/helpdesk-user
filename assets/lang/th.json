@@ -1,0 +1,32 @@
+{
+  "header": {
+    "app": "IT Help Desk System(ไทย)",
+    "menu": {
+    },
+    "profile":{
+      "profile": "โปรไฟล์ของฉัน",
+      "firstname": "ชื่อจริง",
+      "lastname": "นามสกุล",
+      "phone" : "เบอร์โทรศัพท์",
+      "email" : "อีเมล",
+      "roles" : "สิทธิ์การใช้งาน",
+      "status" : "สถานะ",
+      "save" : "บันทึกโปรไฟล์",
+      "change_password" : "เปลี่ยนรหัสผ่านใหม่",
+      "current_password" : "รหัสผ่านปัจจุบัน",
+      "new_password" : "รหัสผ่านใหม่",
+      "confirm_password" : "ยืนยันรหัสผ่านใหม่",
+      "save_password" : "บันทึกรหัสผ่านใหม่",
+      "logout" : "ออกจากระบบ"
+    },
+    "topic": {
+      "service": "OUR SERVICE th",
+      "support": "COUNTRIES THAT SUPPORT PROJECTS th",
+      "brand": "ALL PRODUCT th"
+    },
+    "lang": "เปลี่ยนภาษา"
+  },
+  "footer": {
+    "app": "ส่วนท้าย"
+  }
+}

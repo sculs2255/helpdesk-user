@@ -22,6 +22,15 @@
                 <v-icon right>{{ item.icon }}</v-icon>
               </v-btn>
             </div>
+
+             <div >
+              <v-divider class="my-3"></v-divider>
+                <v-btn depressed rounded text @click="logOut" >
+               LOGOUT
+                <v-icon right>fa-sign-out-alt</v-icon>
+              </v-btn>
+             </div>
+
           </div>
         </v-list-item-content>
       </v-card>
@@ -36,7 +45,6 @@ export default {
       menus: [
         { title: 'Profile', to: '/profile', icon: 'fa-user' },
         { title: 'Change Password', to: '/password', icon: 'fa-lock' },
-        { title: 'Logout', to: '', icon: 'fa-sign-out-alt' },
       ],
       // User
       firstname: 'Teerapat',
@@ -44,5 +52,12 @@ export default {
       email: 'example@gmail.com',
     }
   },
+   methods: {
+     async logOut(){
+         await this.$auth.logout();
+         this.$router.push("/login");
+      }
+
+   }
 }
 </script>
