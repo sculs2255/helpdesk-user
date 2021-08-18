@@ -57,8 +57,8 @@ export default {
     return {
       filter: {
         textSearch: "",
-        pageSize: 0,
-        pageNumber: 1,
+        pageSize: 10,
+        pageNumber: 0,
         caseTypeID: 0
       },
       optionDataTables: {},
@@ -92,18 +92,32 @@ export default {
     })
   },
   watch: {
-
+       optionDataTables: {
+          handler() {
+            this._getDataList();
+          },
+        },
+        deep: true,
   },
   methods: {
     ...mapActions({
       getDataList: "case/getDataList",
     }),
-    _getDataList(){
-        this.getDataList(this.filter);
+    async _getDataList(){
+       const { page, itemsPerPage, sortBy, sortDesc } = this.optionDataTables;
+        this.filter.sortOrder = sortBy;
+        if (sortDesc == "true") {
+          this.filter.sortOrder = sortBy + "_desc";
+        }
+        this.filter.pageSize = itemsPerPage;
+        this.filter.pageNumber = page;
+        this.loading_dts = true;
+        await this.getDataList(this.filter);
+        this.loading_dts = false;
     }
   },
-  async created() {
-     await this._getDataList();
+  async fetch() {
+
   },
 }
 </script>
