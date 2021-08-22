@@ -98,14 +98,14 @@
       </v-card-title>
       <v-card-text class="subheading">
         <v-autocomplete
-          v-model="system"
+          v-model="form.system"
           :rules="[rules.required]"
           :items="SystemList"
           label="System *"
           required
         ></v-autocomplete>
         <v-autocomplete
-          v-model="module"
+          v-model="form.module"
           :rules="[rules.required]"
           :items="ModuleList"
           label="Module *"
@@ -118,19 +118,19 @@
           required
         ></v-text-field>
         <v-text-field
-          v-model="topic"
+          v-model="form.topic"
           label="Topic *"
           :rules="[rules.required]"
           required
         ></v-text-field>
         <v-textarea
-          v-model="description"
+          v-model="form.description"
           label="Description *"
           :rules="[rules.required]"
           required
         ></v-textarea>
         <v-radio-group
-          v-model="priority"
+          v-model="form.PriorityID"
           label="Priority *"
           row
           :rules="[rules.required]"
@@ -141,20 +141,20 @@
           <v-radio label="Low" color="info" value="3"></v-radio>
         </v-radio-group>
         <v-file-input
-          v-model="file"
+          v-model="form.file"
           chips
           multiple
           label="File (Optional)"
           prepend-icon="fa-paperclip"
         ></v-file-input>
         <v-textarea
-          v-model="note"
+          v-model="form.note"
           label="Note (Optional)"
           prepend-icon="far fa-sticky-note"
           rows="2"
         ></v-textarea>
         <v-textarea
-          v-model="ccmail"
+          v-model="form.ccmail"
           label="CC Mail (Optional)"
           prepend-icon="far fa-envelope"
           rows="1"
@@ -199,6 +199,19 @@ export default {
       file: null,
       note: '',
       ccmail: '',
+      form: {
+        system: "",
+        module: "",
+        pid: "",
+        topic: "",
+        description: "",
+        priority: '',
+        file: null,
+        note: '',
+        ccmail: '',
+        CaseTypeID: 1,
+        StatusID: 2
+      },
       // Search
       namesearch: '',
       SearchList: [
@@ -270,11 +283,21 @@ export default {
     },
   },
   methods: {
-    submit() {
+    async submit() {
       if (this.$refs.form.validate()) {
         this.isDisabled = true
-        this.$vuetify.goTo(10, 1000)
-        this.SubmitSB = true
+
+        await this.$store
+          .dispatch("case/create", this.form)
+          .then((response) => {
+            // Action Success
+            this.$vuetify.goTo(10, 1000)
+            this.SubmitSB = true
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
       } else {
         this.$vuetify.goTo(400, 1000)
         this.ValidateSB = true
