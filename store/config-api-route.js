@@ -18,5 +18,9 @@ export default {
   case: {
     main: url + '/Case',
   },
+  ismDb: {
+    main: url + '/IsmDb',
+
+  },
 
 }

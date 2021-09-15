@@ -36,32 +36,32 @@ export const actions = {
         console.log(queryString);
 
 
-        const url = routeAPI.case.main + "?" + queryString;
+        const url = routeAPI.ismDb.main + "?" + queryString;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$get(url, config);
         commit('resData', res)
     },
     async getInfo({ commit }, { id }) {
-        const url = routeAPI.case.main + "/" + id;
+        const url = routeAPI.ismDb.main + "/" + id;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$get(url, config);
         commit('resInfo', res)
     },
     async create({ commit }, params) {
-        const url = routeAPI.case.main;
+        const url = routeAPI.ismDb.main;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$post(url, params, config);
         return res;
     },
     async update({ commit }, params) {
-        const url = routeAPI.case.main + "/" + params.code;
+        const url = routeAPI.ismDb.main + "/" + params.code;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$put(url, params, config);
         return res;
     },
 
     async delete({ commit }, { id }) {
-        const url = routeAPI.case.main + "/" + id;
+        const url = routeAPI.ismDb.main + "/" + id;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$delete(url, config);
         return res;

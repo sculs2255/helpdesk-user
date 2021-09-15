@@ -98,21 +98,21 @@
       </v-card-title>
       <v-card-text class="subheading">
         <v-autocomplete
-          v-model="form.system"
+          v-model="form.systemID"
           :rules="[rules.required]"
-          :items="SystemList"
+          :items="systemList"
           label="System *"
           required
         ></v-autocomplete>
         <v-autocomplete
-          v-model="form.module"
+          v-model="form.moduleID"
           :rules="[rules.required]"
           :items="ModuleList"
           label="Module *"
           required
         ></v-autocomplete>
         <v-text-field
-          v-model="pid"
+          v-model="form.programID"
           label="Program ID *"
           :rules="[rules.required]"
           required
@@ -130,7 +130,7 @@
           required
         ></v-textarea>
         <v-radio-group
-          v-model="form.PriorityID"
+          v-model="form.priorityID"
           label="Priority *"
           row
           :rules="[rules.required]"
@@ -186,147 +186,150 @@ export default {
   data() {
     return {
       // Data
-      name: 'Teerapat Satitporn',
-      country: 'Thailand',
-      branch: 'Silom',
-      department: 'IT',
-      system: '',
-      module: '',
-      pid: '',
-      topic: '',
-      description: '',
-      priority: '',
+      name: "Teerapat Satitporn",
+      country: "Thailand",
+      branch: "Silom",
+      department: "IT",
+      systemID: "",
+      moduleID: "",
+      programID: "",
+      topic: "",
+      description: "",
+      priorityID: "",
       file: null,
-      note: '',
-      ccmail: '',
+      note: "",
+      ccmail: "",
       form: {
-        system: "",
-        module: "",
-        pid: "",
+        caseTypeID: 1,
+        priorityID: "",
+        statusID: 2,
+        systemID: "",
+        moduleID: "",
+        programID: "",
         topic: "",
         description: "",
-        priority: '',
         file: null,
-        note: '',
-        ccmail: '',
-        CaseTypeID: 1,
-        StatusID: 2
+        note: "",
+        ccmail: ""
       },
       // Search
-      namesearch: '',
+      namesearch: "",
       SearchList: [
         {
-          name: 'Teerapat Satitporn',
-          country: 'Thailand',
-          branch: 'Silom',
-          department: 'IT',
+          name: "Teerapat Satitporn",
+          country: "Thailand",
+          branch: "Silom",
+          department: "IT"
         },
         {
-          name: 'John Doe',
-          country: 'Thailand',
-          branch: 'Silom',
-          department: 'HR',
+          name: "John Doe",
+          country: "Thailand",
+          branch: "Silom",
+          department: "HR"
         },
         {
-          name: 'John Smith',
-          country: 'Thailand',
-          branch: 'Sathorn',
-          department: 'Engineer',
-        },
+          name: "John Smith",
+          country: "Thailand",
+          branch: "Sathorn",
+          department: "Engineer"
+        }
       ],
       // List
-      CountryList: ['Thailand', 'Cambodia', 'Malaysia', 'China'],
-      BranchList: ['Silom', 'Sathorn', 'Bang Phli'],
-      DepartmentList: ['IT', 'Accounting', 'HR', 'Engineer'],
-      SystemList: ['System1', 'System2', 'System3', 'System4'],
-      ModuleList: ['Module1', 'Module2', 'Module3', 'Module4'],
+      systemList: ["System1"],
+      CountryList: ["Thailand", "Cambodia", "Malaysia", "China"],
+      BranchList: ["Silom", "Sathorn", "Bang Phli"],
+      DepartmentList: ["IT", "Accounting", "HR", "Engineer"],
+      ModuleList: ["Module1", "Module2", "Module3", "Module4"],
       // Command
       sdialog: false,
       valid: true,
       isDisabled: false,
       rules: {
-        required: (value) => !!value || 'This field is required.',
-      },
-    }
+        required: value => !!value || "This field is required."
+      }
+    };
   },
   computed: {
     NameList() {
-      const list = []
+      const list = [];
       for (const i in this.SearchList) {
-        list.push(this.SearchList[i].name)
+        list.push(this.SearchList[i].name);
       }
-      return list
+      return list;
     },
     SendSB: {
       get() {
-        return this.$store.state.snackbar.SendSB
+        return this.$store.state.snackbar.SendSB;
       },
       set(val) {
-        this.$store.dispatch('snackbar/setSendSB', val, { root: true })
-      },
+        this.$store.dispatch("snackbar/setSendSB", val, { root: true });
+      }
     },
     ValidateSB: {
       get() {
-        return this.$store.state.snackbar.ValidateSB
+        return this.$store.state.snackbar.ValidateSB;
       },
       set(val) {
-        this.$store.dispatch('snackbar/setValidateSB', val, { root: true })
-      },
+        this.$store.dispatch("snackbar/setValidateSB", val, { root: true });
+      }
     },
     SubmitSB: {
       get() {
-        return this.$store.state.snackbar.SubmitSB
+        return this.$store.state.snackbar.SubmitSB;
       },
       set(val) {
-        this.$store.dispatch('snackbar/setSubmitSB', val, { root: true })
-      },
-    },
+        this.$store.dispatch("snackbar/setSubmitSB", val, { root: true });
+      }
+    }
   },
   methods: {
+    // async systemList(item){
+    //    console.log("1")
+    //   await this.getIsmDataInfo({ id: item.IsmDbID });
+    //   console.log("2")
+    //   this.form.system = this.getIsmDataInfo.data.IsmDbName;
+    // },
+
     async submit() {
       if (this.$refs.form.validate()) {
-        this.isDisabled = true
+        this.isDisabled = true;
 
         await this.$store
           .dispatch("case/create", this.form)
-          .then((response) => {
+
+          .then(response => {
             // Action Success
-            this.$vuetify.goTo(10, 1000)
-            this.SubmitSB = true
+            this.$vuetify.goTo(10, 1000);
+            this.SubmitSB = true;
+            console.log(response);
           })
-          .catch((error) => {
+          .catch(error => {
             console.log(error);
           });
-
       } else {
-        this.$vuetify.goTo(400, 1000)
-        this.ValidateSB = true
+        this.$vuetify.goTo(400, 1000);
+        this.ValidateSB = true;
       }
     },
     select() {
       if (this.$refs.search.validate()) {
-        this.name = this.namesearch
+        this.name = this.namesearch;
         for (const i in this.SearchList) {
           if (this.SearchList[i].name === this.namesearch) {
-            this.country = this.SearchList[i].country
-            this.branch = this.SearchList[i].branch
-            this.department = this.SearchList[i].department
+            this.country = this.SearchList[i].country;
+            this.branch = this.SearchList[i].branch;
+            this.department = this.SearchList[i].department;
           }
         }
-        this.sdialog = false
-        this.$refs.search.reset()
+        this.sdialog = false;
+        this.$refs.search.reset();
       }
     },
     cancel() {
-      this.sdialog = false
-      this.$refs.search.reset()
+      this.sdialog = false;
+      this.$refs.search.reset();
     },
-    send() {
-      this.SendSB = true
-      this.$router.push({
-        name: 'index',
-      })
-    },
-  },
-}
+    async send() {}
+  }
+};
 </script>

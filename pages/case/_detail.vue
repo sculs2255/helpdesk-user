@@ -5,7 +5,7 @@
         <CancelSB />
         <v-layout row>
           <v-col cols="12" xs="12" sm="6" md="6">
-            <CaseInfo />
+            <CaseInfo :id="id" :cases="caseInfo" />
           </v-col>
           <v-col cols="12" xs="12" sm="6" md="6">
             <ReceiverInfo />
@@ -28,12 +28,13 @@
 </template>
 
 <script>
-import CaseInfo from '~/components/case/detail/CaseInfo.vue'
-import ReceiverInfo from '~/components/case/detail/ReceiverInfo.vue'
-import IncidentDetail from '~/components/case/detail/IncidentDetail.vue'
-import RequestDetail from '~/components/case/detail/RequestDetail.vue'
-import CaseComment from '~/components/case/detail/CaseComment.vue'
-import CancelSB from '~/components/Snackbar/CancelSB.vue'
+import { mapGetters, mapActions } from "vuex";
+import CaseInfo from "~/components/case/detail/CaseInfo.vue";
+import ReceiverInfo from "~/components/case/detail/ReceiverInfo.vue";
+import IncidentDetail from "~/components/case/detail/IncidentDetail.vue";
+import RequestDetail from "~/components/case/detail/RequestDetail.vue";
+import CaseComment from "~/components/case/detail/CaseComment.vue";
+import CancelSB from "~/components/Snackbar/CancelSB.vue";
 
 export default {
   components: {
@@ -42,10 +43,34 @@ export default {
     IncidentDetail,
     RequestDetail,
     CaseComment,
-    CancelSB,
+    CancelSB
   },
-  validate(data) {
-    return /^\d+$/.test(data.params.detail)
+  data() {
+    return {
+      id: "",
+      cases: []
+    };
   },
-}
+  computed: {
+    ...mapGetters({
+      caseList: "case/list",
+      caseInfo: "case/info"
+    })
+  },
+  methods: {
+    ...mapActions({
+      getDataList: "case/getDataList",
+      getDataInfo: "case/getInfo"
+    }),
+  },
+  async fetch() {
+    this.id = this.$route.params.detail;
+    await this.getDataInfo({id: this.id});
+    this.cases = this.caseInfo;
+    console.log(this.caseInfo);
+    console.log("cases : ",this.cases);
+    console.log(this.$route);
+    console.log(this.$route.params.detail);
+  }
+};
 </script>

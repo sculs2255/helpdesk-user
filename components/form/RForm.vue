@@ -98,27 +98,27 @@
       </v-card-title>
       <v-card-text class="subheading">
         <v-autocomplete
-          v-model="system"
+          v-model="form.systemID"
           :rules="[rules.required]"
           :items="SystemList"
           label="System *"
           required
         ></v-autocomplete>
         <v-autocomplete
-          v-model="topic"
+          v-model="form.topicID"
           :rules="[rules.required]"
           :items="TopicList"
           label="Topic *"
           required
         ></v-autocomplete>
         <v-textarea
-          v-model="description"
+          v-model="form.description"
           label="Description *"
           :rules="[rules.required]"
           required
         ></v-textarea>
         <v-radio-group
-          v-model="priority"
+          v-model="form.priorityID"
           label="Priority *"
           row
           :rules="[rules.required]"
@@ -129,20 +129,20 @@
           <v-radio label="Low" color="info" value="3"></v-radio>
         </v-radio-group>
         <v-file-input
-          v-model="file"
+          v-model="form.file"
           chips
           multiple
           label="File (Optional)"
           prepend-icon="fa-paperclip"
         ></v-file-input>
         <v-textarea
-          v-model="note"
+          v-model="form.note"
           label="Note (Optional)"
           prepend-icon="far fa-sticky-note"
           rows="2"
         ></v-textarea>
         <v-textarea
-          v-model="ccmail"
+          v-model="form.ccmail"
           label="CC Mail (Optional)"
           prepend-icon="far fa-envelope"
           rows="1"
@@ -174,17 +174,28 @@ export default {
   data() {
     return {
       // Data
-      name: 'Teerapat Satitporn',
-      country: 'Thailand',
-      branch: 'Silom',
-      department: 'IT',
-      topic: '',
-      system: '',
-      description: '',
-      priority: '',
+      name: "Teerapat Satitporn",
+      country: "Thailand",
+      branch: "Silom",
+      department: "IT",
+      topicID: "",
+      systemID: "",
+      description: "",
+      priorityID: "",
       file: null,
-      note: '',
-      ccmail: '',
+      note: "",
+      ccmail: "",
+      form: {
+        caseTypeID: 2,
+        priorityID: "",
+        statusID: 2,
+        systemID: "",
+        topicID: "",
+        description: "",
+        file: null,
+        note: "",
+        ccmail: ""
+      },
       // Search
       namesearch: '',
       SearchList: [
@@ -211,7 +222,7 @@ export default {
       CountryList: ['Thailand', 'Cambodia', 'Malaysia', 'China'],
       BranchList: ['Silom', 'Sathorn', 'Bang Phli'],
       DepartmentList: ['IT', 'Accounting', 'HR', 'Engineer'],
-      TopicList: ['Topic1', 'Topic2', 'Topic3', 'Topic4'],
+      TopicList: [1,2,3,4,5,6,7],
       SystemList: ['System1', 'System2', 'System3', 'System4'],
       // Command
       sdialog: false,
@@ -256,14 +267,25 @@ export default {
     },
   },
   methods: {
-    submit() {
+    async submit() {
       if (this.$refs.form.validate()) {
-        this.isDisabled = true
-        this.$vuetify.goTo(10, 1000)
-        this.SubmitSB = true
+        this.isDisabled = true;
+
+        await this.$store
+          .dispatch("case/create", this.form)
+
+          .then(response => {
+            // Action Success
+            this.$vuetify.goTo(10, 1000);
+            this.SubmitSB = true;
+            console.log(response);
+          })
+          .catch(error => {
+            console.log(error);
+          });
       } else {
-        this.$vuetify.goTo(400, 1000)
-        this.ValidateSB = true
+        this.$vuetify.goTo(400, 1000);
+        this.ValidateSB = true;
       }
     },
     select() {
