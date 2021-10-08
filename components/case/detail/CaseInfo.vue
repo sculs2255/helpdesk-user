@@ -1,40 +1,33 @@
 <template>
-  <v-card class="pa-3" v-if="cases.data">
-    {{ cases.data }}
-
+  <v-card class="pa-3" v-if="cases">
     <v-card-title class="headline">
       <v-icon color="black">fa-clipboard-list</v-icon>
-      Case ID: {{ cases.data.caseID }}
-      &ensp;
+      &ensp; Case ID:{{ cases.caseID }}
     </v-card-title>
     <v-card-text class="subheading">
       <div class="text--primary pb-4 text-h6">
-        Type: &ensp;{{ cases.data.caseTypeID }}
+        Type: &ensp;{{ getTName(cases.caseTypeID) }}
       </div>
       <div class="text--primary pb-4 text-h6">
-        Submit Date: &ensp;{{ cases.data.caseDate }}
+        Submit Date: &ensp;{{ cases.caseDate }}
       </div>
       <div class="text--primary pb-4 text-h6">
         Priority: &ensp;
-        <v-chip :color="getPColor(cases.data.priorityID)">
-          {{ getPName(cases.data.priorityID) }}
+        <v-chip :color="getPColor(cases.priorityID)">
+          {{ getPName(cases.priorityID) }}
         </v-chip>
       </div>
       <div class="text--primary pb-4 text-h6">
         Status: &ensp;
-        <v-chip :color="getSColor(cases.data.statusID)">
-          {{ getSName(cases.data.statusID) }}
+        <v-chip :color="getSColor(cases.statusID)">
+          {{ getSName(cases.statusID) }}
         </v-chip>
       </div>
     </v-card-text>
-    <!-- {{ id }}
-    {{ cases }}
-    {{ caseInfo }} -->
   </v-card>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
 export default {
   props: {
     id: { type: String, default: "" },
@@ -54,38 +47,33 @@ export default {
       // ]
     };
   },
-  computed: {
-    ...mapGetters({
-      caseList: "case/list",
-      caseInfo: "case/info"
-    })
-  },
 
   methods: {
-    ...mapActions({
-      getDataInfo: "case/getInfo"
-    }),
     getPColor(priority) {
       if (priority === 1) return "error";
       else if (priority === 2) return "warning";
-      else if (priority === "3") return "info";
+      else if (priority === 3) return "info";
     },
     getSColor(status) {
       if (status === 1) return "info";
       else if (status === 2) return "warning";
-      else if (status === "3") return "success";
-      else if (status === "4") return "error";
+      else if (status === 3) return "success";
+      else if (status === 4) return "error";
     },
     getPName(priority) {
       if (priority === 1) return "High";
       else if (priority === 2) return "Medium";
-      else if (priority === "3") return "Low";
+      else if (priority === 3) return "Low";
     },
     getSName(status) {
       if (status === 1) return "New Case";
       else if (status === 2) return "In Progress";
-      else if (status === "3") return "Complete";
-      else if (status === "4") return "Cancel";
+      else if (status === 3) return "Complete";
+      else if (status === 4) return "Cancel";
+    },
+    getTName(caseTypeID) {
+      if (caseTypeID === 1) return "Incident";
+      else return "Request";
     }
   }
   // async mounted() {

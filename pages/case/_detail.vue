@@ -8,18 +8,31 @@
             <CaseInfo :id="id" :cases="caseInfo" />
           </v-col>
           <v-col cols="12" xs="12" sm="6" md="6">
-            <ReceiverInfo />
+            <ReceiverInfo
+              :id="id"
+              :cases="caseInfo"
+              :receivers="receiverInfo"
+              v-if="receiverInfo != null"
+            />
           </v-col>
           <v-col cols="12" xs="12" sm="12" md="12">
-            <div v-if="$route.query.type == `Incident`">
-              <IncidentDetail />
+            <div>
+              <IncidentDetail
+                :id="id"
+                :cases="caseInfo"
+                v-if="$route.query.type == 1"
+              />
             </div>
-            <div v-if="$route.query.type == `Request`">
-              <RequestDetail />
+            <div>
+              <RequestDetail
+                :id="id"
+                :cases="caseInfo"
+                v-if="$route.query.type == 2"
+              />
             </div>
           </v-col>
           <v-col cols="12" xs="12" sm="12" md="12">
-            <CaseComment />
+            <CaseComment :id="id" :cases="caseInfo" :comments="commentInfo" />
           </v-col>
         </v-layout>
       </v-container>
@@ -48,29 +61,47 @@ export default {
   data() {
     return {
       id: "",
-      cases: []
+      cases: [],
+      receivers: [],
+      comments: {}
     };
   },
   computed: {
     ...mapGetters({
-      caseList: "case/list",
-      caseInfo: "case/info"
+      caseInfo: "case/info",
+      receiverInfo: "receiver/info",
+      commentInfo: "comment/info"
     })
   },
   methods: {
     ...mapActions({
-      getDataList: "case/getDataList",
-      getDataInfo: "case/getInfo"
-    }),
+      getDataInfo: "case/getInfo",
+      getDataReceiverInfo: "receiver/getInfo",
+      getDataCommentInfo: "comment/getInfo"
+    })
   },
   async fetch() {
     this.id = this.$route.params.detail;
-    await this.getDataInfo({id: this.id});
+
+    await this.getDataInfo({ id: this.id });
+    await this.getDataReceiverInfo({ id: this.id });
+    await this.getDataCommentInfo({ id: this.id });
     this.cases = this.caseInfo;
-    console.log(this.caseInfo);
-    console.log("cases : ",this.cases);
+    this.receivers = this.receiverInfo;
+    this.comments = this.commentInfo;
+
+    console.log("Comment : ", this.commentInfo);
+    console.log("Comment : ", this.comments);
+    console.log("GetComment : ", this.getDataCommentInfo);
+
+    console.log("ReceiverInfo : ", this.receiverInfo);
+    console.log("receivers : ", this.receivers);
+
+    console.log("caseInfo : ", this.caseInfo);
+    console.log("cases : ", this.cases);
     console.log(this.$route);
-    console.log(this.$route.params.detail);
+    console.log("ID : ", this.$route.params.detail);
+    console.log("Type : ", this.$route.query.type);
   }
 };
 </script>

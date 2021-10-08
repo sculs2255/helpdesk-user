@@ -1,6 +1,5 @@
 <template>
   <v-row justify="center" align="center">
-    {{ caseList }}
     <v-col cols="12" sm="12" md="12">
       <v-container>
         <CancelSB />
@@ -38,7 +37,7 @@
                 fab
                 x-small
                 color="info"
-                @click="ClickDetail(item.caseID, item.caseTypeID)"
+                @click="ClickDetail(item.caseID,item.caseTypeID)"
               >
                 <v-icon>fa-clipboard-list</v-icon>
               </v-btn>
@@ -118,15 +117,15 @@ export default {
       await this.getDataList(this.filter);
       this.loading_dts = false;
     },
-    ClickDetail(caseID, caseTypeID) {
+    ClickDetail(caseID,caseTypeID) {
       this.$router.push({
-        name: "case-detail",
+
+        path: '/case/'+caseID,
         params: {
           detail: caseID
+        },query: {
+          type: caseTypeID,
         },
-        query: {
-          type: caseTypeID
-        }
       });
     }
   },
