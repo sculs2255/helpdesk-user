@@ -188,7 +188,7 @@ export default {
       form: {
         caseTypeID: 2,
         priorityID: "",
-        statusID: 2,
+        statusID: 1,
         systemID: "",
         topicID: "",
         description: "",
@@ -197,74 +197,74 @@ export default {
         ccmail: ""
       },
       // Search
-      namesearch: '',
+      namesearch: "",
       SearchList: [
         {
-          name: 'Teerapat Satitporn',
-          country: 'Thailand',
-          branch: 'Silom',
-          department: 'IT',
+          name: "Teerapat Satitporn",
+          country: "Thailand",
+          branch: "Silom",
+          department: "IT"
         },
         {
-          name: 'John Doe',
-          country: 'Thailand',
-          branch: 'Silom',
-          department: 'HR',
+          name: "John Doe",
+          country: "Thailand",
+          branch: "Silom",
+          department: "HR"
         },
         {
-          name: 'John Smith',
-          country: 'Thailand',
-          branch: 'Sathorn',
-          department: 'Engineer',
-        },
+          name: "John Smith",
+          country: "Thailand",
+          branch: "Sathorn",
+          department: "Engineer"
+        }
       ],
       // List
-      CountryList: ['Thailand', 'Cambodia', 'Malaysia', 'China'],
-      BranchList: ['Silom', 'Sathorn', 'Bang Phli'],
-      DepartmentList: ['IT', 'Accounting', 'HR', 'Engineer'],
-      TopicList: [1,2,3,4,5,6,7],
-      SystemList: ['System1', 'System2', 'System3', 'System4'],
+      CountryList: ["Thailand", "Cambodia", "Malaysia", "China"],
+      BranchList: ["Silom", "Sathorn", "Bang Phli"],
+      DepartmentList: ["IT", "Accounting", "HR", "Engineer"],
+      TopicList: [1, 2, 3, 4, 5, 6, 7],
+      SystemList: ["System1", "System2", "System3", "System4"],
       // Command
       sdialog: false,
       valid: true,
       isDisabled: false,
       rules: {
-        required: (value) => !!value || 'This field is required.',
-      },
-    }
+        required: value => !!value || "This field is required."
+      }
+    };
   },
   computed: {
     NameList() {
-      const list = []
+      const list = [];
       for (const i in this.SearchList) {
-        list.push(this.SearchList[i].name)
+        list.push(this.SearchList[i].name);
       }
-      return list
+      return list;
     },
     SendSB: {
       get() {
-        return this.$store.state.snackbar.SendSB
+        return this.$store.state.snackbar.SendSB;
       },
       set(val) {
-        this.$store.dispatch('snackbar/setSendSB', val, { root: true })
-      },
+        this.$store.dispatch("snackbar/setSendSB", val, { root: true });
+      }
     },
     ValidateSB: {
       get() {
-        return this.$store.state.snackbar.ValidateSB
+        return this.$store.state.snackbar.ValidateSB;
       },
       set(val) {
-        this.$store.dispatch('snackbar/setValidateSB', val, { root: true })
-      },
+        this.$store.dispatch("snackbar/setValidateSB", val, { root: true });
+      }
     },
     SubmitSB: {
       get() {
-        return this.$store.state.snackbar.SubmitSB
+        return this.$store.state.snackbar.SubmitSB;
       },
       set(val) {
-        this.$store.dispatch('snackbar/setSubmitSB', val, { root: true })
-      },
-    },
+        this.$store.dispatch("snackbar/setSubmitSB", val, { root: true });
+      }
+    }
   },
   methods: {
     async submit() {
@@ -290,28 +290,28 @@ export default {
     },
     select() {
       if (this.$refs.search.validate()) {
-        this.name = this.namesearch
+        this.name = this.namesearch;
         for (const i in this.SearchList) {
           if (this.SearchList[i].name === this.namesearch) {
-            this.country = this.SearchList[i].country
-            this.branch = this.SearchList[i].branch
-            this.department = this.SearchList[i].department
+            this.country = this.SearchList[i].country;
+            this.branch = this.SearchList[i].branch;
+            this.department = this.SearchList[i].department;
           }
         }
-        this.sdialog = false
-        this.$refs.search.reset()
+        this.sdialog = false;
+        this.$refs.search.reset();
       }
     },
     cancel() {
-      this.sdialog = false
-      this.$refs.search.reset()
+      this.sdialog = false;
+      this.$refs.search.reset();
     },
     send() {
-      this.SendSB = true
+      this.SendSB = true;
       this.$router.push({
-        name: 'index',
-      })
-    },
-  },
-}
+        name: "index"
+      });
+    }
+  }
+};
 </script>

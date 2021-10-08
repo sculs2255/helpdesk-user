@@ -202,7 +202,7 @@ export default {
       form: {
         caseTypeID: 1,
         priorityID: "",
-        statusID: 2,
+        statusID: 1,
         systemID: "",
         moduleID: "",
         programID: "",
@@ -291,6 +291,7 @@ export default {
     // },
 
     async submit() {
+      console.log("1");
       if (this.$refs.form.validate()) {
         this.isDisabled = true;
 
