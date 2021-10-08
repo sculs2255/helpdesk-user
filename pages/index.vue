@@ -1,6 +1,7 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="12" md="9">
+      {{$auth.user.user.id}}
       <v-container>
         <SendSB />
         <ResetPassSB />
@@ -29,6 +30,10 @@ export default {
     if (!this.$auth.loggedIn) {
       this.$router.push("/login");
     }
+  },
+
+  async fetch() {
+     console.log(this.$auth.user.user.id)
   },
 }
 </script>

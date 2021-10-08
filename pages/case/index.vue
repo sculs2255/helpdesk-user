@@ -102,7 +102,8 @@ export default {
       caseList: "case/list"
     })
   },
-  methods: {
+  methods:
+  {
     ...mapActions({
       getDataList: "case/getDataList"
     }),

@@ -2,6 +2,7 @@ const url = process.env.API_URL
 export default {
   user: {
     main: url + '/User/GetUserList',
+    main: url+'/User',
     info_edit: url + '/User',
     update: url + '/User',
     register: url + '/AuthManagement/Register',
@@ -18,9 +19,34 @@ export default {
   case: {
     main: url + '/Case',
   },
-  ismDb: {
-    main: url + '/IsmDb',
 
+  branch:{
+    main:  url +'/Branch',
   },
+
+  country:{
+    main:  url +'/Country',
+  },
+
+  department:{
+    main:  url +'/Department',
+  },
+
+  hdsystem:{
+    main: url+'/HDSystem',
+  },
+
+  module:{
+    main: url+'/Module',
+  },
+  topic:{
+    main: url+'/Topic',
+  },
+
+
+
+
+
+
 
 }

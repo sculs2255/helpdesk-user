@@ -30,41 +30,17 @@ export const actions = {
         var queryString = Object.keys(params).map(function (key) {
             if (params[key] == null) params[key] = "";
             return key + '=' + params[key]
-        }).join('&') ;
-
-        console.log(params);
-        console.log(queryString);
-
-
-        const url = routeAPI.case.main + "?" + queryString;
+        }).join('&');
+        const url = routeAPI.department.main + "?" + queryString;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$get(url, config);
         commit('resData', res)
     },
-    async getInfo({ commit }, { id }) {
-        const url = routeAPI.case.main + "/" + id;
+    async getInfo({ commit }, { code }) {
+        const url = routeAPI.department.main + "/" + code;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$get(url, config);
         commit('resInfo', res)
     },
-    
-    async create({ commit }, params) {
-        const url = routeAPI.case.main;
-        const config = { headers: { Authorization: this.$auth.getToken('local') } }
-        const res = await this.$axios.$post(url, params, config);
-        return res;
-    },
-    async update({ commit }, params) {
-        const url = routeAPI.case.main + "/" + params.code;
-        const config = { headers: { Authorization: this.$auth.getToken('local') } }
-        const res = await this.$axios.$put(url, params, config);
-        return res;
-    },
 
-    async delete({ commit }, { id }) {
-        const url = routeAPI.case.main + "/" + id;
-        const config = { headers: { Authorization: this.$auth.getToken('local') } }
-        const res = await this.$axios.$delete(url, config);
-        return res;
-    },
 };
