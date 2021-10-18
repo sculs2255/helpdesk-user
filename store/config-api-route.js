@@ -45,7 +45,14 @@ export default {
   receiver: {
     main: url + "/Receiver"
   },
+
+  workplace: {
+    main: url + "/Workplace"
+  },
+  
   comment: {
     main: url + "/Comment"
   }
+
+
 };

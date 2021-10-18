@@ -12,105 +12,163 @@
         &ensp;Case Informer
       </v-card-title>
       <v-card-text class="subheading">
-        <v-row wrap>
-          <v-col cols="12" xs="8" sm="8" md="8">
-            <v-text-field
-              v-model="name"
-              label="Full Name *"
-              :rules="[rules.required]"
-              readonly
-              required
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" xs="4" sm="4" md="4">
-            <v-dialog v-model="sdialog" persistent width="600">
-              <template #activator="{ on, attrs }">
-                <v-btn
-                  slot="activator"
-                  color="info"
-                  :disabled="isDisabled"
-                  v-bind="attrs"
-                  v-on="on"
-                >
-                  <v-icon left>fa-search</v-icon>
-                  Search Name
-                </v-btn>
-              </template>
-              <v-card>
-                <v-form ref="search">
-                  <v-card-title class="headline justify-center">
-                    Search Informer Name
-                  </v-card-title>
-                  <v-card-text>
-                    <v-autocomplete
-                      v-model="namesearch"
-                      :rules="[rules.required]"
-                      :items="NameList"
-                      label="Full Name *"
-                      prepend-icon="fa-user"
-                      required
-                    ></v-autocomplete>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-btn color="error" text @click="cancel"> Cancel </v-btn>
-                    <v-spacer />
-                    <v-btn color="success" @click="select">
-                      Select
-                      <v-icon right>fa-check</v-icon>
-                    </v-btn>
-                  </v-card-actions>
-                </v-form>
-              </v-card>
-            </v-dialog>
-          </v-col>
-        </v-row>
+       <v-row wrap>
+            <v-col cols="12" xs="8" sm="8" md="8">
+              <v-text-field
+                v-model="form.user"
+                item-value="id"
+                item-text="firstName"
+                label="Full Name *"
+                :rules="[rules.required]"
+                readonly
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" xs="4" sm="4" md="4">
+              <v-dialog v-model="sdialog" persistent width="600">
+                <template #activator="{ on, attrs }">
+                  <v-btn
+                    slot="activator"
+                    color="info"
+                    :disabled="isDisabled"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <v-icon left>fa-search</v-icon>Search Name
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-form ref="search">
+                    <v-card-title class="headline justify-center">Search Informer Name</v-card-title>
+                    <v-card-text>
+                      <v-autocomplete
+                        v-model="name"
+                        :rules="[rules.required]"
+                        item-text="firstName"
+                        item-value="id"
+                        :items="userList.data"
+                        label="Full Name *"
+                        prepend-icon="fa-user"
+                        required
+                        clearable
+                      ></v-autocomplete>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-btn color="error" text @click="cancel">Cancel</v-btn>
+                      <v-spacer />
+                      <v-btn color="success" @click="selectName">
+                        Select
+                        <v-icon right>fa-check</v-icon>
+                      </v-btn>
+                    </v-card-actions>
+                  </v-form>
+                </v-card>
+              </v-dialog>
+            </v-col>
+          </v-row>
       </v-card-text>
-      <v-card-title class="headline">
-        <v-icon color="black">fa-map-marker-alt</v-icon>
-        &ensp;Current Workplace
-      </v-card-title>
+     <v-card-title class="headline">
+          <v-icon color="black">fa-edit</v-icon>&ensp;Work Place
+        </v-card-title>
+         <v-card-text class="subheading">
+          <v-row wrap>
+            <v-col cols="12" xs="8" sm="8" md="8">
+              <v-text-field
+                v-model="form.workplace"
+                item-value="workplaceID"
+                item-text=" departmentName"
+                label="WorkPlace *"
+                :rules="[rules.required]"
+                readonly
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" xs="4" sm="4" md="4">
+              <v-dialog v-model="adialog" persistent width="600">
+                <template #activator="{ on, attrs }">
+                  <v-btn
+                    slot="activator"
+                    color="info"
+                    :disabled="isDisabled"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <v-icon left>fa-search</v-icon>Search Workplace
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-form ref="search">
+                    <v-card-title class="headline justify-center">Search Workplace</v-card-title>
+                    <v-card-text>
+                      <v-autocomplete
+                        v-model="namecountry"
+                        :rules="[rules.required]"
+                        item-text="countryName"
+                        item-value="countryName"
+                        :items="workplaceList.data"
+                        label="Workplace Country*"
+                        prepend-icon="fa-edit"
+                        required
+                        clearable
+                      ></v-autocomplete>
+                      <v-autocomplete
+                        v-model="namebranch"
+                        :rules="[rules.required]"
+                        item-text="branchName"
+                        item-value="branchName"
+                        :items="workplaceList.data"
+                        label="Workplace Branch*"
+                        prepend-icon="fa-edit"
+                        required
+                        clearable
+                      ></v-autocomplete>
+                        <v-autocomplete
+                        v-model="nameworkplace"
+                        :rules="[rules.required]"
+                        item-text="departName"
+                        item-value="departName"
+                        :items="workplaceList.data"
+                        label="Workplace Department*"
+                        prepend-icon="fa-edit"
+                        required
+                        clearable
+                      ></v-autocomplete>
+
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-btn color="error" text @click="cancelwork">Cancel</v-btn>
+                      <v-spacer />
+                      <v-btn color="success" @click="select">
+                        Select
+                        <v-icon right>fa-check</v-icon>
+                      </v-btn>
+                    </v-card-actions>
+                  </v-form>
+                </v-card>
+              </v-dialog>
+            </v-col>
+          </v-row>
+         </v-card-text>
       <v-card-text class="subheading">
         <v-autocomplete
-          v-model="country"
-          :rules="[rules.required]"
-          :items="CountryList"
-          label="Country *"
-          required
-        ></v-autocomplete>
-        <v-autocomplete
-          v-model="branch"
-          :rules="[rules.required]"
-          :items="BranchList"
-          label="Branch *"
-          required
-        ></v-autocomplete>
-        <v-autocomplete
-          v-model="department"
-          :rules="[rules.required]"
-          :items="DepartmentList"
-          label="Department *"
-          required
-        ></v-autocomplete>
-      </v-card-text>
-      <v-card-title class="headline">
-        <v-icon color="black">fa-file-alt</v-icon>
-        &ensp;Request Form
-      </v-card-title>
-      <v-card-text class="subheading">
-        <v-autocomplete
-          v-model="form.systemID"
-          :rules="[rules.required]"
-          :items="SystemList"
-          label="System *"
-          required
-        ></v-autocomplete>
-        <v-autocomplete
-          v-model="form.topicID"
-          :rules="[rules.required]"
-          :items="TopicList"
-          label="Topic *"
-          required
-        ></v-autocomplete>
+            v-model="form.systemID"
+            item-value="systemID"
+            item-text="systemName"
+            :items="hdsystemList.data"
+            label="System *"
+            required
+            @change="systemf"
+            clearable
+          ></v-autocomplete>
+       <v-autocomplete
+            v-model="form.topicID"
+            item-value="topicID"
+            item-text="topicName"
+            :items="topicList.data"
+            label="Topic*"
+            required
+            clearable
+          ></v-autocomplete>
         <v-textarea
           v-model="form.description"
           label="Description *"
@@ -170,27 +228,37 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
       // Data
-      name: "Teerapat Satitporn",
-      country: "Thailand",
-      branch: "Silom",
-      department: "IT",
-      topicID: "",
-      systemID: "",
-      description: "",
-      priorityID: "",
-      file: null,
-      note: "",
-      ccmail: "",
+      filter: {
+        textSearch: "",
+        pageSize: 10,
+        pageNumber: 0,
+        countryID: 0,
+        systemID: 0
+      },
+        user: "",
+        priorityID: "",
+        systemID: "",
+        moduleID: "",
+        programID: "",
+        topic: "",
+        description: "",
+        file: null,
+        note: "",
+        ccmail: "",
       form: {
-        caseTypeID: 2,
+        user: "",
+        caseTypeID: 1,
         priorityID: "",
         statusID: 1,
         systemID: "",
-        topicID: "",
+        moduleID: "",
+        programID: "",
+        topic: "",
         description: "",
         file: null,
         note: "",
@@ -198,34 +266,22 @@ export default {
       },
       // Search
       namesearch: "",
-      SearchList: [
-        {
-          name: "Teerapat Satitporn",
-          country: "Thailand",
-          branch: "Silom",
-          department: "IT"
-        },
-        {
-          name: "John Doe",
-          country: "Thailand",
-          branch: "Silom",
-          department: "HR"
-        },
-        {
-          name: "John Smith",
-          country: "Thailand",
-          branch: "Sathorn",
-          department: "Engineer"
-        }
-      ],
+      // SearchList: [
+      //   {
+      //     name: "Teerapat Satitporn"
+      //   },
+      //   {
+      //     name: "John Doe"
+      //   },
+      //   {
+      //     name: "John Smith"
+      //   }
+      // ],
       // List
-      CountryList: ["Thailand", "Cambodia", "Malaysia", "China"],
-      BranchList: ["Silom", "Sathorn", "Bang Phli"],
-      DepartmentList: ["IT", "Accounting", "HR", "Engineer"],
-      TopicList: [1, 2, 3, 4, 5, 6, 7],
-      SystemList: ["System1", "System2", "System3", "System4"],
+
       // Command
       sdialog: false,
+      adialog: false,
       valid: true,
       isDisabled: false,
       rules: {
@@ -233,14 +289,20 @@ export default {
       }
     };
   },
+
   computed: {
-    NameList() {
-      const list = [];
-      for (const i in this.SearchList) {
-        list.push(this.SearchList[i].name);
-      }
-      return list;
-    },
+
+    ...mapGetters({
+      countryList: "country/list",
+      branchList: "branch/list",
+      departmentList: "department/list",
+      hdsystemList: "hdsystem/list",
+      moduleList: "module/list",
+      userList:"user/list",
+      workplaceList :"workplace/list",
+      topicList :"topic/list"
+
+    }),
     SendSB: {
       get() {
         return this.$store.state.snackbar.SendSB;
@@ -266,19 +328,103 @@ export default {
       }
     }
   },
+
   methods: {
+    systemf: function(systemID) {
+      this.getListModule(systemID);
+    },
+
+    // modulef(moduleID){
+    // this.getListHdsystem(moduleID)
+    //},
+
+    ...mapActions({
+      getDataList: "country/getDataList",
+      getDataListbr: "branch/getDataList",
+      getDataListde: "department/getDataList",
+      getDataListhd: "hdsystem/getDataList",
+      getDataListmo: "module/getDataList",
+      getDataListUs: "user/getDataList",
+      getDataListwo:"workplace/getDataList",
+      getDataListto:"topic/getDataList"
+    }),
+      async getListTopic() {
+      this.filter.sortOrder = "code";
+      this.filter.pageSize = 1000;
+      this.filter.pageNumber = 1;
+      this.loading_dts = true;
+      await this.getDataListto(this.filter);
+      this.loading_dts = false;
+    },
+      async getListWorkplace() {
+      this.filter.sortOrder = "code";
+      this.filter.pageSize = 1000;
+      this.filter.pageNumber = 1;
+      this.loading_dts = true;
+      await this.getDataListwo(this.filter);
+      this.loading_dts = false;
+    },
+     async getListUser() {
+      this.filter.sortOrder = "code";
+      this.filter.pageSize = 1000;
+      this.filter.pageNumber = 1;
+      this.loading_dts = true;
+      await this.getDataListUs(this.filter);
+      this.loading_dts = false;
+    },
+    async getListModule(systemID) {
+      this.filter.sortOrder = "code";
+      this.filter.pageSize = 1000;
+      this.filter.pageNumber = 1;
+      this.filter.systemID = systemID;
+      this.loading_dts = true;
+      await this.getDataListmo(this.filter);
+      this.loading_dts = false;
+    },
+    async getListBranch(countryID) {
+      this.filter.sortOrder = "code";
+      this.filter.pageSize = 1000;
+      this.filter.pageNumber = 1;
+      this.filter.countryID = countryID;
+      this.loading_dts = true;
+      await this.getDataListbr(this.filter);
+      this.loading_dts = false;
+    },
+    async getListHdsystem() {
+      this.filter.sortOrder = "code";
+      this.filter.pageSize = 1000;
+      this.filter.pageNumber = 1;
+      this.loading_dts = true;
+      await this.getDataListhd(this.filter);
+      this.loading_dts = false;
+    },
+    async getListDepartment() {
+      this.filter.sortOrder = "code";
+      this.filter.pageSize = 1000;
+      this.filter.pageNumber = 1;
+      this.loading_dts = true;
+      await this.getDataListde(this.filter);
+      this.loading_dts = false;
+    },
+    async getListCountry() {
+      this.filter.sortOrder = "code";
+      this.filter.pageSize = 1000;
+      this.filter.pageNumber = 1;
+      this.loading_dts = true;
+      await this.getDataList(this.filter);
+      this.loading_dts = false;
+    },
+
     async submit() {
       if (this.$refs.form.validate()) {
         this.isDisabled = true;
 
         await this.$store
           .dispatch("case/create", this.form)
-
           .then(response => {
             // Action Success
-            this.$vuetify.goTo(10, 1000);
-            this.SubmitSB = true;
-            console.log(response);
+            // this.$vuetify.goTo(10, 1000)
+            // this.SubmitSB = true
           })
           .catch(error => {
             console.log(error);
@@ -288,17 +434,22 @@ export default {
         this.ValidateSB = true;
       }
     },
+    selectName() {
+      if (this.$refs.search.validate()) {
+        this.form.user = this.name;
+
+        this.sdialog = false;
+        this.$refs.search.reset();
+      }
+    },
     select() {
       if (this.$refs.search.validate()) {
-        this.name = this.namesearch;
-        for (const i in this.SearchList) {
-          if (this.SearchList[i].name === this.namesearch) {
-            this.country = this.SearchList[i].country;
-            this.branch = this.SearchList[i].branch;
-            this.department = this.SearchList[i].department;
-          }
-        }
-        this.sdialog = false;
+        // this.form.workplace = this.nameworkplace;
+        // this.form.workplace = this.namecountry;
+        // this.form.workplace = this.namebranch;
+         this.form.workplace = this.namebranch +" / "+ this.nameworkplace + " / " +this.namecountry;
+
+        this.adialog = false;
         this.$refs.search.reset();
       }
     },
@@ -306,12 +457,102 @@ export default {
       this.sdialog = false;
       this.$refs.search.reset();
     },
+    cancelwork() {
+      this.adialog = false;
+      this.$refs.search.reset();
+    },
+
     send() {
       this.SendSB = true;
       this.$router.push({
         name: "index"
       });
     }
+  },
+
+
+
+  async fetch() {
+    await this.getListUser();
+    await this.getListCountry();
+    //await this.getListBranch(0);
+    await this.getListDepartment();
+    await this.getListHdsystem();
+    //await this.getListModule(0);
+     await this.getListWorkplace();
+     await this.getListTopic();
+  },
+
+  SendSB: {
+    get() {
+      return this.$store.state.snackbar.SendSB;
+    },
+    set(val) {
+      this.$store.dispatch("snackbar/setSendSB", val, { root: true });
+    }
+  },
+  ValidateSB: {
+    get() {
+      return this.$store.state.snackbar.ValidateSB;
+    },
+    set(val) {
+      this.$store.dispatch("snackbar/setValidateSB", val, { root: true });
+    }
+  },
+  SubmitSB: {
+    get() {
+      return this.$store.state.snackbar.SubmitSB;
+    },
+    set(val) {
+      this.$store.dispatch("snackbar/setSubmitSB", val, { root: true });
+    }
   }
+
+  /*methods: {
+    async submit() {
+      if (this.$refs.form.validate()) {
+        this.isDisabled = true
+
+        await this.$store
+          .dispatch("case/create", this.form)
+          .then((response) => {
+            // Action Success
+            // this.$vuetify.goTo(10, 1000)
+            // this.SubmitSB = true
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+      } else {
+        this.$vuetify.goTo(400, 1000)
+        this.ValidateSB = true
+      }
+    },
+    select() {
+      if (this.$refs.search.validate()) {
+        this.name = this.namesearch
+        for (const i in this.SearchList) {
+          if (this.SearchList[i].name === this.namesearch) {
+            this.country = this.SearchList[i].country
+            this.branchname = this.SearchList[i].branchname
+            this.department = this.SearchList[i].department
+          }
+        }
+        this.sdialog = false
+        this.$refs.search.reset()
+      }
+    },
+    cancel() {
+      this.sdialog = false
+      this.$refs.search.reset()
+    },
+    send() {
+      this.SendSB = true
+      this.$router.push({
+        name: 'index',
+      })
+    },
+  },*/
 };
 </script>

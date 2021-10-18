@@ -3,7 +3,8 @@
 
 
   <v-card class="pa-3">
-
+      {{workplaceList}}
+      {{$auth.user.user.id}}
     <v-card-title v-if="isDisabled == false" class="text-h4 justify-center">
       Incident Case Form
     </v-card-title>
@@ -284,7 +285,8 @@ computed: {
       branchList:"branch/list",
       departmentList:"department/list",
       hdsystemList:"hdsystem/list",
-      moduleList:"module/list"
+      moduleList:"module/list",
+      workplaceList :"workplace/list"
 
     }),
      SendSB: {
@@ -329,8 +331,17 @@ computed: {
       getDataListbr:"branch/getDataList",
       getDataListde:"department/getDataList",
       getDataListhd:"hdsystem/getDataList",
-      getDataListmo:"module/getDataList"
+      getDataListmo:"module/getDataList",
+      getDataListwo:"workplace/getDataList"
     }),
+     async getListWorkplace() {
+      this.filter.sortOrder = "code";
+      this.filter.pageSize = 1000;
+      this.filter.pageNumber = 1;
+      this.loading_dts = true;
+      await this.getDataListwo(this.filter);
+      this.loading_dts = false;
+    },
        async getListModule(systemID) {
       this.filter.sortOrder = "code";
       this.filter.pageSize = 1000;
@@ -429,6 +440,7 @@ async submit() {
       await this.getListDepartment();
       await this.getListHdsystem();
       //await this.getListModule(0);
+      await this.getListWorkplace();
   },
 
     SendSB: {

@@ -31,7 +31,7 @@ export const actions = {
             if (params[key] == null) params[key] = "";
             return key + '=' + params[key]
         }).join('&');
-        const url = routeAPI.user.main + "?" + queryString;
+        const url = routeAPI.user.userlist + "?" + queryString;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$get(url, config);
         commit('resData', res)
