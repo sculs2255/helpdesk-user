@@ -47,9 +47,9 @@ export default {
   },
 
   workplace: {
-    main: url + "/Workplace"
+    main: url + "/Workplace/List"
   },
-  
+
   comment: {
     main: url + "/Comment"
   }

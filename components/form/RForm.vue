@@ -149,6 +149,10 @@
             </v-col>
           </v-row>
          </v-card-text>
+
+           <v-card-title class="headline">
+          <v-icon color="black">fa-file-alt</v-icon>&ensp;Request Form
+        </v-card-title>
       <v-card-text class="subheading">
         <v-autocomplete
             v-model="form.systemID"
@@ -250,20 +254,14 @@ export default {
         file: null,
         note: "",
         ccmail: "",
-      form: {
-        user: "",
-        caseTypeID: 1,
+       form: {
+        caseTypeID: 2,
         priorityID: "",
         statusID: 1,
         systemID: "",
-        moduleID: "",
-        programID: "",
-        topic: "",
+        topicID: "",
         description: "",
-        file: null,
-        note: "",
-        ccmail: ""
-      },
+       },
       // Search
       namesearch: "",
       // SearchList: [
