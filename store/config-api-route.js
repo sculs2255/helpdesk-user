@@ -1,6 +1,7 @@
 const url = process.env.API_URL;
 export default {
   user: {
+    userinfo : url + "/Profile/UserInfo",
     main: url + "/User/GetUserList",
     info_edit: url + "/User",
     update: url + "/User",

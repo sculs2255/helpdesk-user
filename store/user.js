@@ -43,4 +43,11 @@ export const actions = {
         commit('resInfo', res)
     },
 
+    async getUserInfo({ commit }, { code }) {
+      const url = routeAPI.user.userinfo + "/" + code;
+      const config = { headers: { Authorization: this.$auth.getToken('local') } }
+      const res = await this.$axios.$get(url, config);
+      commit('resInfo', res)
+  },
+
 };

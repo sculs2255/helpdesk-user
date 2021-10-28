@@ -9,12 +9,13 @@
         </v-card-title>
         <v-card-text class="subheading">
           <v-row wrap>
+
             <v-col cols="12" xs="8" sm="8" md="8">
               <v-text-field
                 v-model="form.user"
                 item-value="id"
                 item-text="firstName"
-                label="Full Name *"
+                label="user"
                 :rules="[rules.required]"
                 readonly
                 required
@@ -32,6 +33,7 @@
                   >
                     <v-icon left>fa-search</v-icon>Search Name
                   </v-btn>
+
                 </template>
                 <v-card>
                   <v-form ref="search">
@@ -45,6 +47,7 @@
                         :items="userList.data"
                         label="Full Name *"
                         prepend-icon="fa-user"
+                        @change="userf"
                         required
                         clearable
                       ></v-autocomplete>
@@ -64,90 +67,28 @@
           </v-row>
         </v-card-text>
 
-          <!-- workplace -->
-
+        <!-- workplace -->
          <v-card-title class="headline">
           <v-icon color="black">fa-edit</v-icon>&ensp;Work Place
         </v-card-title>
          <v-card-text class="subheading">
-          <v-row wrap>
-            <v-col cols="12" xs="8" sm="8" md="8">
-              <v-text-field
-                v-model="form.workplace"
-                item-value="workplaceID"
-                item-text=" departmentName"
-                label="WorkPlace *"
-                :rules="[rules.required]"
-                readonly
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" xs="4" sm="4" md="4">
-              <v-dialog v-model="adialog" persistent width="600">
-                <template #activator="{ on, attrs }">
-                  <v-btn
-                    slot="activator"
-                    color="info"
-                    :disabled="isDisabled"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-icon left>fa-search</v-icon>Search Workplace
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-form ref="search">
-                    <v-card-title class="headline justify-center">Search Workplace</v-card-title>
-                    <v-card-text>
-                      <v-autocomplete
-                        v-model="namecountry"
-                        :rules="[rules.required]"
-                        item-text="countryName"
-                        item-value="countryName"
-                        :items="workplaceList.data"
-                        label="Workplace Country*"
-                        prepend-icon="fa-edit"
-                        required
-                        clearable
-                      ></v-autocomplete>
-                      <v-autocomplete
-                        v-model="namebranch"
-                        :rules="[rules.required]"
-                        item-text="branchName"
-                        item-value="branchName"
-                        :items="workplaceList.data"
-                        label="Workplace Branch*"
-                        prepend-icon="fa-edit"
-                        required
-                        clearable
-                      ></v-autocomplete>
-                        <v-autocomplete
-                        v-model="nameworkplace"
-                        :rules="[rules.required]"
-                        item-text="departName"
-                        item-value="departName"
-                        :items="workplaceList.data"
-                        label="Workplace Department*"
-                        prepend-icon="fa-edit"
-                        required
-                        clearable
-                      ></v-autocomplete>
+         <v-autocomplete
+          label="Workplace"
+          v-model="form.workplaceID"
+          :items="workplaceList.data"
+          item-value="workplaceID"
+          item-text="workplaceID"
 
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-btn color="error" text @click="cancelwork">Cancel</v-btn>
-                      <v-spacer />
-                      <v-btn color="success" @click="select">
-                        Select
-                        <v-icon right>fa-check</v-icon>
-                      </v-btn>
-                    </v-card-actions>
-                  </v-form>
-                </v-card>
-              </v-dialog>
-            </v-col>
-          </v-row>
-        </v-card-text>
+        >
+          <template slot="selection" slot-scope="{ item }">
+                   {{ item.workplaceID }} - {{ item.countryName }} - {{ item.branchName }} - {{ item.departName }}
+                  </template>
+                  <template slot="item" slot-scope="{ item }">
+                    {{ item.workplaceID }} - {{ item.countryName }} - {{ item.branchName }} - {{ item.departName }}
+                  </template>
+
+        </v-autocomplete>
+         </v-card-text>
 
 
 
@@ -175,7 +116,12 @@
             required
             clearable
           ></v-autocomplete>
-          <v-text-field v-model="form.programID" label="Program ID *" :rules="[rules.required]" required></v-text-field>
+          <v-text-field
+            v-model="form.programID"
+            label="Program ID *"
+            :rules="[rules.required]"
+            required
+          ></v-text-field>
           <v-text-field v-model="form.topic" label="Topic *" :rules="[rules.required]" required></v-text-field>
           <v-textarea
             v-model="form.description"
@@ -239,6 +185,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
+      radios: null,
       // Data
       filter: {
         textSearch: "",
@@ -247,18 +194,19 @@ export default {
         countryID: 0,
         systemID: 0
       },
-        user: "",
-        priorityID: "",
-        systemID: "",
-        moduleID: "",
-        programID: "",
-        topic: "",
-        description: "",
-        file: null,
-        note: "",
-        ccmail: "",
+      user: "",
+      priorityID: "",
+      systemID: "",
+      moduleID: "",
+      programID: "",
+      topic: "",
+      description: "",
+      file: null,
+      note: "",
+      ccmail: "",
       form: {
         user: "",
+        workplaceID: "",
         caseTypeID: 1,
         priorityID: "",
         statusID: 1,
@@ -298,15 +246,15 @@ export default {
   },
 
   computed: {
-
     ...mapGetters({
       countryList: "country/list",
       branchList: "branch/list",
       departmentList: "department/list",
       hdsystemList: "hdsystem/list",
       moduleList: "module/list",
-      userList:"user/list",
-      workplaceList :"workplace/list"
+      userList: "user/list",
+      workplaceList: "workplace/list",
+      userinfoList: "user/userinfo"
     }),
     SendSB: {
       get() {
@@ -337,7 +285,16 @@ export default {
   methods: {
     systemf: function(systemID) {
       this.getListModule(systemID);
+
     },
+
+    userf: function(Id) {
+      this.getListWorkplace(Id);
+      console.log(Id+"สวัสดี");
+
+    },
+
+
 
     // modulef(moduleID){
     // this.getListHdsystem(moduleID)
@@ -350,23 +307,27 @@ export default {
       getDataListhd: "hdsystem/getDataList",
       getDataListmo: "module/getDataList",
       getDataListUs: "user/getDataList",
-      getDataListwo:"workplace/getDataList"
+      getDataListwo: "workplace/getDataList",
+      getDataListUserinfo: "user/getUserInfo"
     }),
-      async getListWorkplace() {
-      this.filter.sortOrder = "code";
-      this.filter.pageSize = 1000;
-      this.filter.pageNumber = 1;
-      this.loading_dts = true;
-      await this.getDataListwo(this.filter);
-      this.loading_dts = false;
-    },
-     async getListUser() {
+
+    async getListUser() {
       this.filter.sortOrder = "code";
       this.filter.pageSize = 1000;
       this.filter.pageNumber = 1;
       this.loading_dts = true;
       await this.getDataListUs(this.filter);
       this.loading_dts = false;
+    },
+    async getListWorkplace(Id) {
+      this.filter.sortOrder = "code";
+      this.filter.pageSize = 1000;
+      this.filter.pageNumber = 1;
+      this.filter.UserID = Id;
+      this.loading_dts = true;
+      await this.getDataListwo(this.filter);
+      this.loading_dts = false;
+      console.log("ขอโทษ");
     },
     async getListModule(systemID) {
       this.filter.sortOrder = "code";
@@ -433,9 +394,9 @@ export default {
     selectName() {
       if (this.$refs.search.validate()) {
         this.form.user = this.name;
-
         this.sdialog = false;
         this.$refs.search.reset();
+
       }
     },
     select() {
@@ -443,7 +404,12 @@ export default {
         // this.form.workplace = this.nameworkplace;
         // this.form.workplace = this.namecountry;
         // this.form.workplace = this.namebranch;
-         this.form.workplace = this.namebranch +" / "+ this.nameworkplace + " / " +this.namecountry;
+        this.form.workplace =
+          this.namebranch +
+          " / " +
+          this.nameworkplace +
+          " / " +
+          this.namecountry;
 
         this.adialog = false;
         this.$refs.search.reset();
@@ -466,16 +432,16 @@ export default {
     }
   },
 
-
-
   async fetch() {
+
+    this.form.user = this.$auth.user.user.email;
     await this.getListUser();
     await this.getListCountry();
     //await this.getListBranch(0);
     await this.getListDepartment();
     await this.getListHdsystem();
     //await this.getListModule(0);
-     await this.getListWorkplace();
+    //await this.getListWorkplace();
   },
 
   SendSB: {

@@ -1,5 +1,6 @@
 <template>
   <v-card class="pa-3">
+    {{workplaceList}}
     <v-card-title v-if="isDisabled == false" class="text-h4 justify-center">
       Request Case Form
     </v-card-title>
