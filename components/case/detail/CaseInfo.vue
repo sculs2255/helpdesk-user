@@ -1,5 +1,6 @@
 <template>
   <v-card class="pa-3" v-if="cases">
+    
     <v-card-title class="headline">
       <v-icon color="black">fa-clipboard-list</v-icon>
       &ensp; Case ID:{{ cases.caseID }}

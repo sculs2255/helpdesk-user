@@ -42,6 +42,10 @@ export default {
   topic:{
     main: url+'/Topic',
   },
+  
+  informer: {
+    main: url + "/Informer"
+  },
 
   receiver: {
     main: url + "/Receiver"

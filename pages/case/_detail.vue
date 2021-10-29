@@ -19,6 +19,7 @@
             <div>
               <IncidentDetail
                 :id="id"
+                :informers="informerInfo"
                 :cases="caseInfo"
                 v-if="$route.query.type == 1"
               />
@@ -26,6 +27,7 @@
             <div>
               <RequestDetail
                 :id="id"
+                :informers="informerInfo"
                 :cases="caseInfo"
                 v-if="$route.query.type == 2"
               />
@@ -63,13 +65,16 @@ export default {
       id: "",
       cases: [],
       receivers: [],
-      comments: {}
+      comments: {},
+      informers: [],
+
     };
   },
-  computed: {
+ computed: {
     ...mapGetters({
       caseInfo: "case/info",
       receiverInfo: "receiver/info",
+      informerInfo: "informer/info",
       commentInfo: "comment/info"
     })
   },
@@ -77,7 +82,8 @@ export default {
     ...mapActions({
       getDataInfo: "case/getInfo",
       getDataReceiverInfo: "receiver/getInfo",
-      getDataCommentInfo: "comment/getInfo"
+      getDataCommentInfo: "comment/getInfo",
+       getDataInformerInfo: "informer/getInfo",
     })
   },
   async fetch() {
@@ -85,14 +91,16 @@ export default {
 
     await this.getDataInfo({ id: this.id });
     await this.getDataReceiverInfo({ id: this.id });
-    await this.getDataCommentInfo({ id: this.id });
+    await this.getDataInformerInfo({ id: this.id });
+    // await this.getDataCommentInfo({ id: this.id });
     this.cases = this.caseInfo;
     this.receivers = this.receiverInfo;
-    this.comments = this.commentInfo;
+    this.informers = this.informerInfo;
+    //this.comments = this.commentInfo;
 
-    console.log("Comment : ", this.commentInfo);
-    console.log("Comment : ", this.comments);
-    console.log("GetComment : ", this.getDataCommentInfo);
+    //console.log("Comment : ", this.commentInfo);
+    //console.log("Comment : ", this.comments);
+    //console.log("GetComment : ", this.getDataCommentInfo);
 
     console.log("ReceiverInfo : ", this.receiverInfo);
     console.log("receivers : ", this.receivers);

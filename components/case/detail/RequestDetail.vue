@@ -8,7 +8,7 @@
         </v-card-title>
         <v-card-text class="subheading">
           <div class="text--primary pb-4">
-            <strong>Name:</strong> &ensp;{{ cases.name }}
+            <strong>Name:</strong> &ensp;{{ informers.firstName}} {{ informers.lastName}}
           </div>
         </v-card-text>
         <v-card-title class="headline">
@@ -16,14 +16,9 @@
           &ensp;Current Workplace
         </v-card-title>
         <v-card-text class="subheading">
+
           <div class="text--primary pb-4">
-            <strong>Country:</strong> &ensp;{{ cases.country }}
-          </div>
-          <div class="text--primary pb-4">
-            <strong>Branch:</strong> &ensp;{{ cases.branch }}
-          </div>
-          <div class="text--primary pb-4">
-            <strong>Department:</strong> &ensp;{{ cases.department }}
+            <strong>WorkplaceID:</strong> &ensp;{{ informers.workplaceID }}
           </div>
         </v-card-text>
         <v-card-title class="headline">
@@ -100,7 +95,8 @@
 export default {
    props: {
     id: { type: String, default: "" },
-    cases: { type: Object, default: () => {} }
+    cases: { type: Object, default: () => {} },
+     informers: { type: Object, default: () => {} }
   },
   data() {
     return {

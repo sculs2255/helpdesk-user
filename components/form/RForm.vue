@@ -50,6 +50,7 @@
                         :items="userList.data"
                         label="Full Name *"
                         prepend-icon="fa-user"
+                        @change="userf"
                         required
                         clearable
                       ></v-autocomplete>
@@ -68,88 +69,28 @@
             </v-col>
           </v-row>
       </v-card-text>
-     <v-card-title class="headline">
+      <v-card-title class="headline">
           <v-icon color="black">fa-edit</v-icon>&ensp;Work Place
         </v-card-title>
          <v-card-text class="subheading">
-          <v-row wrap>
-            <v-col cols="12" xs="8" sm="8" md="8">
-              <v-text-field
-                v-model="form.workplace"
-                item-value="workplaceID"
-                item-text=" departmentName"
-                label="WorkPlace *"
-                :rules="[rules.required]"
-                readonly
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" xs="4" sm="4" md="4">
-              <v-dialog v-model="adialog" persistent width="600">
-                <template #activator="{ on, attrs }">
-                  <v-btn
-                    slot="activator"
-                    color="info"
-                    :disabled="isDisabled"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-icon left>fa-search</v-icon>Search Workplace
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-form ref="search">
-                    <v-card-title class="headline justify-center">Search Workplace</v-card-title>
-                    <v-card-text>
-                      <v-autocomplete
-                        v-model="namecountry"
-                        :rules="[rules.required]"
-                        item-text="countryName"
-                        item-value="countryName"
-                        :items="workplaceList.data"
-                        label="Workplace Country*"
-                        prepend-icon="fa-edit"
-                        required
-                        clearable
-                      ></v-autocomplete>
-                      <v-autocomplete
-                        v-model="namebranch"
-                        :rules="[rules.required]"
-                        item-text="branchName"
-                        item-value="branchName"
-                        :items="workplaceList.data"
-                        label="Workplace Branch*"
-                        prepend-icon="fa-edit"
-                        required
-                        clearable
-                      ></v-autocomplete>
-                        <v-autocomplete
-                        v-model="nameworkplace"
-                        :rules="[rules.required]"
-                        item-text="departName"
-                        item-value="departName"
-                        :items="workplaceList.data"
-                        label="Workplace Department*"
-                        prepend-icon="fa-edit"
-                        required
-                        clearable
-                      ></v-autocomplete>
+         <v-autocomplete
+          label="Workplace"
+          v-model="form.workplaceID"
+          :items="workplaceList.data"
+          item-value="workplaceID"
+          item-text="workplaceID"
 
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-btn color="error" text @click="cancelwork">Cancel</v-btn>
-                      <v-spacer />
-                      <v-btn color="success" @click="select">
-                        Select
-                        <v-icon right>fa-check</v-icon>
-                      </v-btn>
-                    </v-card-actions>
-                  </v-form>
-                </v-card>
-              </v-dialog>
-            </v-col>
-          </v-row>
+        >
+          <template slot="selection" slot-scope="{ item }">
+                   {{ item.workplaceID }} - {{ item.countryName }} - {{ item.branchName }} - {{ item.departName }}
+                  </template>
+                  <template slot="item" slot-scope="{ item }">
+                    {{ item.workplaceID }} - {{ item.countryName }} - {{ item.branchName }} - {{ item.departName }}
+                  </template>
+
+        </v-autocomplete>
          </v-card-text>
+
 
            <v-card-title class="headline">
           <v-icon color="black">fa-file-alt</v-icon>&ensp;Request Form
@@ -256,12 +197,17 @@ export default {
         note: "",
         ccmail: "",
        form: {
+        user: "",
+        workplaceID: "",
         caseTypeID: 2,
         priorityID: "",
         statusID: 1,
         systemID: "",
         topicID: "",
         description: "",
+        file: null,
+        note: "",
+        ccmail: ""
        },
       // Search
       namesearch: "",
@@ -333,6 +279,12 @@ export default {
       this.getListModule(systemID);
     },
 
+    userf: function(Id) {
+      this.getListWorkplace(Id);
+      console.log(Id+"สวัสดี");
+
+    },
+
     // modulef(moduleID){
     // this.getListHdsystem(moduleID)
     //},
@@ -355,13 +307,15 @@ export default {
       await this.getDataListto(this.filter);
       this.loading_dts = false;
     },
-      async getListWorkplace() {
+      async getListWorkplace(Id) {
       this.filter.sortOrder = "code";
       this.filter.pageSize = 1000;
       this.filter.pageNumber = 1;
+      this.filter.UserID = Id;
       this.loading_dts = true;
       await this.getDataListwo(this.filter);
       this.loading_dts = false;
+      console.log("ขอโทษ");
     },
      async getListUser() {
       this.filter.sortOrder = "code";
@@ -472,13 +426,14 @@ export default {
 
 
   async fetch() {
+    this.form.user = this.$auth.user.user.email;
     await this.getListUser();
     await this.getListCountry();
     //await this.getListBranch(0);
     await this.getListDepartment();
     await this.getListHdsystem();
     //await this.getListModule(0);
-     await this.getListWorkplace();
+    // await this.getListWorkplace();
      await this.getListTopic();
   },
 
